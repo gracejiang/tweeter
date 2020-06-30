@@ -27,6 +27,7 @@ public class TimelineActivity extends AppCompatActivity {
     List<Tweet> tweets;
     TweetsAdapter tweetsAdapter;
     SwipeRefreshLayout swipeContainer;
+    EndlessRecyclerViewScrollListener scrollListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +62,45 @@ public class TimelineActivity extends AppCompatActivity {
         tweetsAdapter = new TweetsAdapter(this, tweets);
 
         // (3) layout manager and adapter
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rvTweets.setLayoutManager(layoutManager);
         rvTweets.setAdapter(tweetsAdapter);
 
+        // endless scroll
+        scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.i(TAG, "onLoadMore " + page);
+                loadMoreData();
+            }
+        };
+
+        // adds scroll listener to recycler view
+        rvTweets.addOnScrollListener(scrollListener);
+
         populateHomeTimeline();
+    }
+
+    private void loadMoreData() {
+        client.getNextPageOfTweets(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                // deserialize and construct new model objcts from api response
+                JSONArray jsonArray = json.jsonArray;
+                try {
+                    List<Tweet> tweets = Tweet.fromJsonArray(jsonArray);
+                    tweetsAdapter.addAll(tweets);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "onFailure for loadMoreData!", throwable);
+            }
+        }, tweets.get(tweets.size() - 1).id);
+
     }
 
     private void populateHomeTimeline() {
