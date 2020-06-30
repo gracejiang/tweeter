@@ -1,11 +1,20 @@
 package com.codepath.apps.restclienttemplate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
 
+import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Headers;
 
@@ -13,6 +22,9 @@ public class TimelineActivity extends AppCompatActivity {
 
     public static final String TAG = "TimelineActivity";
     TwitterClient client;
+    RecyclerView rvTweets;
+    List<Tweet> tweets;
+    TweetsAdapter tweetsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +32,18 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
 
         client = TwitterApp.getRestClient(this);
+
+        // find recycler view
+        rvTweets = findViewById(R.id.timeline_tweets_rv);
+
+        // init list of tweets and adapter
+        tweets = new ArrayList<>();
+        tweetsAdapter = new TweetsAdapter(this, tweets);
+
+        // recycler view setup: layout manager and adapter
+        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        rvTweets.setAdapter(tweetsAdapter);
+
         populateHomeTimeline();
     }
 
@@ -28,6 +52,14 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "onSuccess! " + json.toString());
+                JSONArray jsonArray = json.jsonArray;
+                try {
+                    tweets.addAll(Tweet.fromJsonArray(jsonArray));
+                    tweetsAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    Log.e(TAG, "json exception ", e);
+                    e.printStackTrace();
+                }
             }
 
             @Override
