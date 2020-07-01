@@ -3,11 +3,15 @@ package com.codepath.apps.restclienttemplate;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -22,9 +26,14 @@ public class ComposeActivity extends AppCompatActivity {
 
     TwitterClient client;
     public static String TAG = "ComposeActivity";
+    final int MAX_TWEET_LENGTH = 280;
 
     EditText etCompose;
     Button btnTweet;
+    TextView tvCharsLeft;
+
+    // pulled out for abstraction
+    int charsLeftValidColor = Color.GRAY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +44,7 @@ public class ComposeActivity extends AppCompatActivity {
 
         etCompose = findViewById(R.id.compose_edittext);
         btnTweet = findViewById(R.id.compose_button);
-
-        final int MAX_TWEET_LENGTH = 140;
+        tvCharsLeft = findViewById(R.id.compose_chars_left);
 
         // click listener on button to publish tweet
         btnTweet.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +89,35 @@ public class ComposeActivity extends AppCompatActivity {
                 });
             }
         });
+
+        // character count listener
+        final TextWatcher charsLeftWatcher = new TextWatcher() {
+
+            int charsLeft = 0;
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                charsLeft = MAX_TWEET_LENGTH - etCompose.getText().length();
+                String updateTextMsg = charsLeft + " characters left";
+                tvCharsLeft.setText(updateTextMsg);
+
+                if (charsLeft < 0) {
+                    tvCharsLeft.setTextColor(Color.RED);
+                } else {
+                    tvCharsLeft.setTextColor(charsLeftValidColor);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
+        etCompose.addTextChangedListener(charsLeftWatcher);
 
 
     }
