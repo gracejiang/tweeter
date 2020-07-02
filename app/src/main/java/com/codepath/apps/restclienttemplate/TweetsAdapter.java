@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
+
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
@@ -70,6 +73,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
         ImageView ivProfileImage;
         TextView tvBody;
+        TextView tvFullName;
         TextView tvUsername;
         TextView tvTimestamp;
         ImageView ivImage;
@@ -79,6 +83,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
             ivProfileImage = itemView.findViewById(R.id.tweet_profile_iv);
             tvBody = itemView.findViewById(R.id.tweet_body_tv);
+            tvFullName = itemView.findViewById(R.id.tweet_full_name);
             tvUsername = itemView.findViewById(R.id.tweet_username_tv);
             tvTimestamp = itemView.findViewById(R.id.tweet_timestamp);
             ivImage = itemView.findViewById(R.id.tweet_image);
@@ -86,11 +91,16 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
-            tvUsername.setText(tweet.user.username);
+            tvFullName.setText(tweet.user.name);
+            tvUsername.setText("@" + tweet.user.username);
             tvTimestamp.setText(tweet.createdAt);
+
+            int circleRadius = 100;
+            int margin = 0;
 
             Glide.with(context)
                     .load(tweet.user.profileImageUrl)
+                    .transform(new RoundedCornersTransformation(circleRadius, margin))
                     .into(ivProfileImage);
 
             if (tweet.pictureUrls.size() > 0) {

@@ -96,7 +96,7 @@ public class TimelineActivity extends AppCompatActivity {
         client.getNextPageOfTweets(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                // deserialize and construct new model objcts from api response
+                // deserialize and construct new model objects from api response
                 JSONArray jsonArray = json.jsonArray;
                 try {
                     List<Tweet> tweets = Tweet.fromJsonArray(jsonArray);

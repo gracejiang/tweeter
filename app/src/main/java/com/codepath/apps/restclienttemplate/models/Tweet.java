@@ -38,13 +38,8 @@ public class Tweet {
 
         try {
             tweet.pictureUrls = getImageUrls(jsonObject.getJSONObject("entities"));
-//            Log.i(TAG, tweet.body);
-//            for (String url : tweet.pictureUrls) {
-//                Log.i(TAG, url);
-//            }
         } catch(JSONException e) {
             tweet.pictureUrls = new ArrayList<>();
-            // Log.i(TAG, tweet.body + " has no picture urls");
         }
 
         return tweet;
@@ -81,6 +76,11 @@ public class Tweet {
             int abbreviated_flag = DateUtils.FORMAT_ABBREV_RELATIVE;
             relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
                     System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS, abbreviated_flag).toString();
+            if (relativeDate.contains("min")) {
+                relativeDate = relativeDate.substring(0, relativeDate.length() - 9) + "m";
+            } else if (relativeDate.contains("hr")) {
+                relativeDate = relativeDate.substring(0, relativeDate.length() - 8) + "h";
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }

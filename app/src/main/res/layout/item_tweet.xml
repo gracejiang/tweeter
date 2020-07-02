@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_margin="10dp">
 
     <ImageView
         android:id="@+id/tweet_profile_iv"
@@ -21,20 +21,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/tweet_profile_iv"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/tweet_full_name"
         android:text="gracjj" />
 
     <TextView
         android:id="@+id/tweet_body_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tweet_username_tv"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="2dp"
+        android:layout_below="@+id/tweet_full_name"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/tweet_profile_iv"
-        android:text="This is my tweet!" />
+        android:text="This is my tweet!"
+        android:textColor="#000000" />
 
     <TextView
         android:id="@+id/tweet_timestamp"
@@ -51,8 +52,20 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tweet_body_tv"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
         android:layout_toEndOf="@+id/tweet_profile_iv"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tweet_full_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/tweet_profile_iv"
+        android:text="Grace Jiang"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 </RelativeLayout>
