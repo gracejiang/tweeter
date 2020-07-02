@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate.models;
 
 import android.text.format.DateUtils;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,10 +17,13 @@ import java.util.Locale;
 @Parcel
 public class Tweet {
 
+    public static final String TAG = "Tweet";
+
     public String body;
     public String createdAt;
     public long id;
     public User user;
+    public List<String> pictureUrls;
 
     // empty constructor for parceler library
     public Tweet() {}
@@ -31,8 +35,40 @@ public class Tweet {
         tweet.createdAt = getRelativeTimestamp(jsonObject.getString("created_at"));
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.id = jsonObject.getLong("id");
+
+        try {
+            tweet.pictureUrls = getImageUrls(jsonObject.getJSONObject("entities"));
+//            Log.i(TAG, tweet.body);
+//            for (String url : tweet.pictureUrls) {
+//                Log.i(TAG, url);
+//            }
+        } catch(JSONException e) {
+            tweet.pictureUrls = new ArrayList<>();
+            // Log.i(TAG, tweet.body + " has no picture urls");
+        }
+
         return tweet;
     }
+
+
+    private static List<String> getImageUrls(JSONObject jsonObject) throws JSONException {
+        List<String> urls = new ArrayList<>();
+
+        if (jsonObject == null) {
+            return urls;
+        }
+
+        JSONArray jsonArray = jsonObject.getJSONArray("media");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject obj = (JSONObject) jsonArray.get(i);
+            String url = obj.getString("media_url_https");
+            if (url.contains("media")) {
+                urls.add(url);
+            }
+        }
+        return urls;
+    }
+
 
     private static String getRelativeTimestamp(String rawDate) {
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
