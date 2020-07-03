@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -88,6 +89,11 @@ public class TimelineActivity extends AppCompatActivity {
 
         // adds scroll listener to recycler view
         rvTweets.addOnScrollListener(scrollListener);
+
+        // add dividers
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recyclerview_divider));
+        rvTweets.addItemDecoration(dividerItemDecoration);
 
         populateHomeTimeline();
     }

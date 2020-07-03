@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="30dp">
 
     <ImageView
         android:id="@+id/tweet_profile_iv"
@@ -21,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/tweet_full_name"
         android:text="gracjj" />
@@ -31,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tweet_full_name"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/tweet_profile_iv"
         android:text="This is my tweet!"
@@ -52,7 +55,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tweet_body_tv"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="6dp"
         android:layout_toEndOf="@+id/tweet_profile_iv"
         tools:srcCompat="@tools:sample/avatars" />
@@ -62,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/tweet_profile_iv"
         android:text="Grace Jiang"
