@@ -80,6 +80,8 @@ public class Tweet {
                 relativeDate = relativeDate.substring(0, relativeDate.length() - 9) + "m";
             } else if (relativeDate.contains("hr")) {
                 relativeDate = relativeDate.substring(0, relativeDate.length() - 8) + "h";
+            } else if (relativeDate.contains("sec")) {
+                relativeDate = relativeDate.substring(0, relativeDate.length() - 9) + "s";
             }
         } catch (ParseException e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -101,9 +102,18 @@ public class ComposeActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                charsLeft = MAX_TWEET_LENGTH - etCompose.getText().length();
+                int messageLength = etCompose.getText().length();
+
+                // update characters left
+                charsLeft = MAX_TWEET_LENGTH - messageLength;
                 String updateTextMsg = charsLeft + " characters left";
                 tvCharsLeft.setText(updateTextMsg);
+
+                if (messageLength <= 0 || messageLength > 280) {
+                    btnTweet.setBackgroundColor(ContextCompat.getColor(ComposeActivity.this, R.color.light_gray));
+                } else {
+                    btnTweet.setBackgroundColor(ContextCompat.getColor(ComposeActivity.this, R.color.twitter_blue));
+                }
 
                 if (charsLeft < 0) {
                     tvCharsLeft.setTextColor(Color.RED);
