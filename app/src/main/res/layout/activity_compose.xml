@@ -24,18 +24,6 @@
         android:inputType="textMultiLine"
         android:minLines="5" />
 
-    <Button
-        android:id="@+id/compose_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/compose_edittext"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@color/light_gray"
-        android:text="@string/tweet"
-        android:textColor="#FFFFFF" />
-
     <TextView
         android:id="@+id/compose_chars_left"
         android:layout_width="wrap_content"
@@ -45,4 +33,27 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="12dp"
         android:text="280 characters left" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/compose_edittext"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/compose_button"
+        android:text="Cancel" />
+
+    <Button
+        android:id="@+id/compose_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/compose_edittext"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="5dp"
+        android:background="@color/light_gray"
+        android:text="@string/tweet"
+        android:textColor="#FFFFFF" />
+
 </RelativeLayout>
